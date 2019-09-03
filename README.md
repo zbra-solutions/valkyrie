@@ -1,0 +1,2 @@
+# valkirie
+Job candidate store.
