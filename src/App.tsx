@@ -5,6 +5,7 @@ import { authState } from 'rxfire/auth';
 import Button from '@material-ui/core/Button';
 import Profile from './components/Profile';
 import DocumentList from './components/DocumentList';
+import DocumentForm from './components/DocumentForm';
 
 function App() {
   let [user, setUser] = useState();
@@ -26,6 +27,7 @@ function App() {
             Logout
           </Button>
           <Profile user={user} />
+          <DocumentForm />
           <DocumentList />
         </>
       )}
