@@ -2,7 +2,8 @@ import React from 'react';
 import { db } from '../firebase';
 import { collectionData } from 'rxfire/firestore';
 import { startWith } from 'rxjs/operators';
-import { TextField, Button, Typography } from '@material-ui/core';
+import { TextField, Button, Typography, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 export default class DocumentList extends React.Component {
     collection: firebase.firestore.CollectionReference;
@@ -37,17 +38,20 @@ export default class DocumentList extends React.Component {
                         Upload
                     </Button>
                 </label>
-                <ul>
-                    {this.state.documents.map((doc: any) => {
-                        return (
-                            <>
-                                <li>
-                                    <Typography variant="subtitle1" gutterBottom>{doc.name}</Typography>
-                                </li>
-                            </>
-                        );
-                    })}
-                </ul>
+                {this.state.documents.map((doc: any) => {
+                    return (
+                        <ExpansionPanel>
+                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                                <Typography>{doc.name}</Typography>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails>
+                                <Typography>
+                                    {doc.name}
+                                </Typography>
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel>
+                    );
+                })}
             </>
         )
     };
