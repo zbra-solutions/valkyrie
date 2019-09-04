@@ -9,6 +9,7 @@ import {
   ExpansionPanel,
   ExpansionPanelSummary,
   ExpansionPanelDetails,
+  Link,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
@@ -40,34 +41,30 @@ export default class DocumentList extends React.Component {
   render() {
     return (
       <>
+        <TextField label="Name" />
+        <input
+          accept="image/*"
+          style={{ display: 'none' }}
+          id="raised-button-file"
+          type="file"
+        />
+        <label htmlFor="raised-button-file">
+          <Button variant="contained" component="span">
+            Upload
+          </Button>
+        </label>
         {this.state.documents.map((doc: any) => {
           return (
-            <>
-              <TextField label="Name" />
-              <input
-                accept="image/*"
-                style={{ display: 'none' }}
-                id="raised-button-file"
-                type="file"
-              />
-              <label htmlFor="raised-button-file">
-                <Button variant="contained" component="span">
-                  Upload
-                </Button>
-              </label>
-              {this.state.documents.map((doc: any) => {
-                return (
-                  <ExpansionPanel>
-                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                      <Typography>{doc.name}</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                      <Typography>{doc.name}</Typography>
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                );
-              })}
-            </>
+            <ExpansionPanel>
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>{doc.name}</Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <Typography>
+                  <Link href={doc.link}>Download file</Link>
+                </Typography>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
           );
         })}
       </>
