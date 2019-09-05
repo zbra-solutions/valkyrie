@@ -14,7 +14,7 @@ const ColorButton = withStyles(theme => ({
         color: '#fff',
         backgroundColor: '#7159c1',
         '&:hover': {
-            backgroundColor: purple[700],
+            backgroundColor: purple[500],
         },
     },
 }))(Button);

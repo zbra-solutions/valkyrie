@@ -36,24 +36,47 @@ export default function DocumentForm() {
     }
 
     return (
-        <div>
-            <TextField label="Name" onChange={onChangeName} />
-            <input
-                accept=".pdf,image/*"
-                style={{ display: 'none' }}
-                id="raised-button-file"
-                type="file"
-                onChange={onChangeFileHandler}
-            />
-            <label htmlFor="raised-button-file">
-                <Button variant="contained" component="span">
-                    Escolha o documento
-                </Button>
-                {fileName}
-            </label>
+        <form style={styles.container}>
+            <div>
+                <TextField
+                    label="Name"
+                    onChange={onChangeName}
+                    style={styles.inputName}
+                />
+                <input
+                    accept=".pdf,image/*"
+                    style={{ display: 'none' }}
+                    id="raised-button-file"
+                    type="file"
+                    onChange={onChangeFileHandler}
+                />
+                <label htmlFor="raised-button-file">
+                    <Button variant="contained" component="span">
+                        Choose document
+                    </Button>
+
+                    <span style={styles.fileName}>{fileName}</span>
+                </label>
+            </div>
             <Button variant="contained" component="span" onClick={submit}>
                 Upload
             </Button>
-        </div>
+        </form>
     );
 }
+
+const styles = {
+    container: {
+        display: 'flex',
+        'flex-direction': 'column',
+        marginBottom: '20px',
+    },
+    inputName: {
+        width: '40%',
+        marginRight: '30px',
+        marginBottom: '20px',
+    },
+    fileName: {
+        marginLeft: '15px',
+    },
+};

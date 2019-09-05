@@ -14,7 +14,7 @@ export default function Profile(props: ProfileProps) {
         <>
             {props.user && props.user.photoURL && (
                 <div style={divStyle}>
-                    <Avatar src={props.user.photoURL} />
+                    <Avatar src={props.user.photoURL} style={styles.avatar} />
                     <Typography variant="h4" gutterBottom>
                         Welcome, {props.user.displayName}
                     </Typography>
@@ -23,3 +23,9 @@ export default function Profile(props: ProfileProps) {
         </>
     );
 }
+
+const styles = {
+    avatar: {
+        marginRight: '10px',
+    },
+};
