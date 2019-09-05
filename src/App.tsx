@@ -8,36 +8,36 @@ import DocumentList from './components/DocumentList';
 import DocumentForm from './components/DocumentForm';
 
 function App() {
-  let [user, setUser] = useState();
-  authState(auth).subscribe(u => setUser(u));
+    let [user, setUser] = useState();
+    authState(auth).subscribe(u => setUser(u));
 
-  const login = () => {
-    auth.signInWithPopup(googleProvider);
-  };
+    const login = () => {
+        auth.signInWithPopup(googleProvider);
+    };
 
-  return (
-    <>
-      {user && (
+    return (
         <>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => auth.signOut()}
-          >
-            Logout
-          </Button>
-          <Profile user={user} />
-          <DocumentForm />
-          <DocumentList />
+            {user && (
+                <>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => auth.signOut()}
+                    >
+                        Logout
+                    </Button>
+                    <Profile user={user} />
+                    <DocumentForm />
+                    <DocumentList />
+                </>
+            )}
+            {!user && (
+                <Button variant="contained" color="secondary" onClick={login}>
+                    Sign-In with Google
+                </Button>
+            )}
         </>
-      )}
-      {!user && (
-        <Button variant="contained" color="secondary" onClick={login}>
-          Sign-In with Google
-        </Button>
-      )}
-    </>
-  );
+    );
 }
 
 export default App;
