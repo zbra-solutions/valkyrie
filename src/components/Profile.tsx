@@ -6,14 +6,10 @@ interface ProfileProps {
 }
 
 export default function Profile(props: ProfileProps) {
-    const divStyle = {
-        display: 'flex',
-    };
-
     return (
         <>
             {props.user && props.user.photoURL && (
-                <div style={divStyle}>
+                <div style={styles.container}>
                     <Avatar src={props.user.photoURL} style={styles.avatar} />
                     <Typography variant="h4" gutterBottom>
                         Welcome, {props.user.displayName}
@@ -25,6 +21,10 @@ export default function Profile(props: ProfileProps) {
 }
 
 const styles = {
+    container: {
+        display: 'flex',
+        marginBottom: '20px',
+    },
     avatar: {
         marginRight: '10px',
     },

@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { auth, googleProvider } from '../firebase';
-import { authState } from 'rxfire/auth';
+import React from 'react';
+import { auth } from '../firebase';
 import Button from '@material-ui/core/Button';
 import Profile from '../components/Profile';
 import DocumentList from '../components/DocumentList';

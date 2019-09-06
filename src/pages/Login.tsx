@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import { Button, Container } from '@material-ui/core';
-import { authState } from 'rxfire/auth';
+import { authState, user } from 'rxfire/auth';
 
 import { auth, googleProvider } from '../firebase';
 
 export default function Login(props: any) {
-    let [user, setUser] = useState();
-
-    authState(auth).subscribe(u => {
-        if (u) {
-            setUser(u);
-            localStorage.setItem('user', JSON.stringify(u));
+    authState(auth).subscribe(user => {
+        if (user) {
+            localStorage.setItem('user', JSON.stringify(user));
             props.history.push('/documents');
         }
     });
@@ -28,18 +25,3 @@ export default function Login(props: any) {
         </Container>
     );
 }
-
-const styles = {
-    container: {
-        display: 'flex',
-        'flex-direction': 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-
-        margin: '70px auto',
-        border: '1px solid #ddd',
-        borderRadius: '4px',
-        padding: '15px',
-        background: '#fff',
-    },
-};
