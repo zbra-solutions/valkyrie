@@ -11,35 +11,42 @@ export default function DocumentForm() {
 
     const collection = db.collection('documents');
 
-    function onChangeFileHandler(event: any) {
-        setDocument(event.target.files[0]);
-        setFileName(event.target.files[0].name);
-    }
+    const onChangeFileHandler = (event: any) => {
+        if (event.target.files[0]) {
+            setDocument(event.target.files[0]);
+            setFileName(event.target.files[0].name);
+        }
+    };
 
-    async function submit() {
+    const submit = async () => {
         if (document) {
             const link = await upload();
             collection.add({ name, link });
-        }
-    }
 
-    function upload() {
+            setName('');
+            setDocument(null);
+            setFileName('');
+        }
+    };
+
+    const upload = () => {
         return storageRef
             .child(document.name)
             .put(document)
             .then((snapshot: any) => snapshot.ref.getDownloadURL())
             .catch((error: any) => console.log(error));
-    }
+    };
 
-    function onChangeName(event: any) {
+    const onChangeName = (event: any) => {
         setName(event.target.value);
-    }
+    };
 
     return (
         <form style={styles.container}>
             <div>
                 <TextField
                     label="Name"
+                    value={name}
                     onChange={onChangeName}
                     style={styles.inputName}
                 />
