@@ -2,7 +2,7 @@ import React, { ChangeEvent, Component } from 'react';
 import { db } from '../firebase';
 import { collectionData } from 'rxfire/firestore';
 import { startWith } from 'rxjs/operators';
-import { Link } from '@material-ui/core';
+import { Link, Grid } from '@material-ui/core';
 
 type State = {
     documents: any[];
@@ -54,15 +54,35 @@ export default class DocumentList2 extends Component<{}, State> {
                                     ...divisor,
                                 }}
                             >
-                                <span style={styles.name}>{doc.name}</span>
-                                <Link
-                                    href="#"
-                                    target="blank"
-                                    style={styles.comments}
-                                >
-                                    0 comments
-                                </Link>
-                                <Link href={doc.link}>Download document</Link>
+                                <Grid container>
+                                    <Grid item xs>
+                                        <span style={styles.name}>
+                                            {doc.name}
+                                        </span>
+                                    </Grid>
+                                    <Grid
+                                        item
+                                        xs
+                                        style={styles.commentsGridItem}
+                                    >
+                                        <Link
+                                            href="#"
+                                            target="blank"
+                                            style={styles.comments}
+                                        >
+                                            0 comments
+                                        </Link>
+                                    </Grid>
+                                    <Grid
+                                        item
+                                        xs
+                                        style={styles.downloadLinkGridItem}
+                                    >
+                                        <Link href={doc.link}>
+                                            Download document
+                                        </Link>
+                                    </Grid>
+                                </Grid>
                             </li>
                         );
                     })}
@@ -89,4 +109,10 @@ const styles = {
         fontSize: '12px',
         color: '#aaa',
     },
+    commentsGridItem: {
+        textAlign: 'center',
+    } as React.CSSProperties,
+    downloadLinkGridItem: {
+        textAlign: 'end',
+    } as React.CSSProperties,
 };
