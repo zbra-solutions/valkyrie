@@ -79,7 +79,7 @@ const styles = {
         padding: '20px 0px',
     },
     divisor: {
-        borderTop: '1px solid #eee',
+        borderTop: '1px solid #ddd',
     },
     name: {
         fontSize: '16px',

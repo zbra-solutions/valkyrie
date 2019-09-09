@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, Fab } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
 
 import { storageRef } from '../firebase';
 import { db } from '../firebase';
@@ -43,31 +44,32 @@ export default function DocumentForm() {
 
     return (
         <form style={styles.container}>
-            <div>
-                <TextField
-                    label="Name"
-                    value={name}
-                    onChange={onChangeName}
-                    style={styles.inputName}
-                />
-                <input
-                    accept=".pdf,image/*"
-                    style={{ display: 'none' }}
-                    id="raised-button-file"
-                    type="file"
-                    onChange={onChangeFileHandler}
-                />
-                <label htmlFor="raised-button-file">
-                    <Button variant="contained" component="span">
-                        Choose document
-                    </Button>
-
-                    <span style={styles.fileName}>{fileName}</span>
-                </label>
-            </div>
-            <Button variant="contained" component="span" onClick={submit}>
-                Upload
-            </Button>
+            <TextField
+                label="Name"
+                value={name}
+                onChange={onChangeName}
+                style={styles.inputName}
+            />
+            <input
+                accept=".pdf,image/*"
+                style={{ display: 'none' }}
+                id="raised-button-file"
+                type="file"
+                onChange={onChangeFileHandler}
+            />
+            <label htmlFor="raised-button-file">
+                <Button variant="contained" component="span">
+                    {fileName ? fileName : 'Choose Document'}
+                </Button>
+            </label>
+            <Fab
+                color="primary"
+                size="small"
+                aria-label="add"
+                style={styles.addButton}
+                onClick={submit}>
+                <AddIcon />
+            </Fab>
         </form>
     );
 }
@@ -75,15 +77,20 @@ export default function DocumentForm() {
 const styles = {
     container: {
         display: 'flex',
-        'flex-direction': 'column',
         marginBottom: '20px',
     },
     inputName: {
-        width: '40%',
+        flex: 1,
         marginRight: '30px',
         marginBottom: '20px',
     },
     fileName: {
         marginLeft: '15px',
     },
+    addButton: {
+        marginLeft: '20px',
+
+        background: '#2c465f',
+        color: '#fff',
+    }
 };

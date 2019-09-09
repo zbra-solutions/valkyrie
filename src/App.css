@@ -12,25 +12,11 @@ border-style,
 }
 
 body {
-    background: #7159c1;
     -webkit-font-smoothing: antialiased !important;
     color: #333;
     font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-
-    margin: 70px auto;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 15px;
-    background: #fff;
-    padding: 30px 50px !important;
-}
-
-.container.center {
-    justify-content: center;
-    align-items: center;
+main {
+    padding-top: 20px;
 }
