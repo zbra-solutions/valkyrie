@@ -4,9 +4,19 @@ import ErrorIcon from '@material-ui/icons/Error';
 import { makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import CloseIcon from '@material-ui/icons/Close';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import InfoIcon from '@material-ui/icons/Info';
+import WarningIcon from '@material-ui/icons/Warning';
+
+export enum SnackbarNotificationVariants {
+    Error = 'error',
+    Success = 'success',
+    Warning = 'warning',
+    Info = 'info',
+}
 
 export interface SnackbarNotificationProps {
-    variant: 'error';
+    variant: SnackbarNotificationVariants;
     message: string;
     open: boolean;
     handleClose: () => void;
@@ -15,12 +25,12 @@ export interface SnackbarNotificationProps {
 export default function SnackbarNotification(props: SnackbarNotificationProps) {
     const { variant, message, open, handleClose } = props;
 
-    function onClose(event?: SyntheticEvent, reason?: string) {
+    const onClose = (event?: SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
         handleClose();
-    }
+    };
 
     return (
         <Snackbar
@@ -50,6 +60,9 @@ interface SnackbarContentProps {
 
 const variantIcon = {
     error: ErrorIcon,
+    success: CheckCircleIcon,
+    warning: WarningIcon,
+    info: InfoIcon,
 };
 
 export function SnackbarContentWrapper(props: SnackbarContentProps) {
@@ -78,6 +91,15 @@ export function SnackbarContentWrapper(props: SnackbarContentProps) {
 const useStyles = makeStyles({
     error: {
         backgroundColor: '#D32F2F',
+    },
+    success: {
+        backgroundColor: '#43A047',
+    },
+    warning: {
+        backgroundColor: '#FFA000',
+    },
+    info: {
+        backgroundColor: '#1976D2',
     },
     icon: {
         fontSize: 20,
