@@ -1,10 +1,12 @@
 import React from 'react';
-import { Button, Container } from '@material-ui/core';
+import { Button, makeStyles } from '@material-ui/core';
 import { authState } from 'rxfire/auth';
 
 import { auth, googleProvider } from '../firebase';
 
 export default function Login(props: any) {
+    const classes = useStyles();
+
     authState(auth).subscribe(user => {
         if (user) {
             localStorage.setItem('user', JSON.stringify(user));
@@ -17,11 +19,26 @@ export default function Login(props: any) {
     };
 
     return (
-        <Container maxWidth="sm" className="container center">
-            <h1>Valkyrie</h1>
-            <Button variant="contained" color="secondary" onClick={login}>
+        <div className={classes.container}>
+            <h1>VALKYRIE</h1>
+            <Button variant="contained" color="primary" onClick={login}>
                 Sign-In with Google
             </Button>
-        </Container>
+        </div>
     );
 }
+
+
+const useStyles = makeStyles(theme => ({
+    container: {
+        display: 'flex',
+        flexDirection: 'column',
+        flex: 1,
+
+        margin: '100px auto',
+        maxWidth: '600px',
+        borderRadius: '5px',
+        padding: '30px',
+        boxShadow: '0px 0px 12px 0px rgba(0,0,0,0.4)',
+    }
+}));
