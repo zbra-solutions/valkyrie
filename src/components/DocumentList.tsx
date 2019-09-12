@@ -2,7 +2,8 @@ import React, { ChangeEvent, Component } from 'react';
 import { db } from '../firebase';
 import { collectionData } from 'rxfire/firestore';
 import { startWith } from 'rxjs/operators';
-import { Link } from '@material-ui/core';
+import Comments from '../pages/Comments';
+import { Link } from 'react-router-dom';
 
 type State = {
     documents: any[];
@@ -24,6 +25,7 @@ export default class DocumentList2 extends Component<{}, State> {
         collectionData(this.query, 'id')
             .pipe(startWith([]))
             .subscribe((u: any) => {
+                console.log(u);
                 this.setState({
                     documents: u,
                 });
@@ -38,6 +40,10 @@ export default class DocumentList2 extends Component<{}, State> {
             });
         };
     };
+
+    addComment = () => {
+
+    }
 
     render() {
         return (
@@ -56,13 +62,18 @@ export default class DocumentList2 extends Component<{}, State> {
                             >
                                 <span style={styles.name}>{doc.name}</span>
                                 <Link
-                                    href="#"
-                                    target="blank"
+                                    to={{
+                                        pathname: '/comments',
+                                        state: {
+                                            document: doc,
+                                        },
+                                    }}
                                     style={styles.comments}
                                 >
-                                    0 comments
+                                    {doc.comments ? doc.comments.length : 0}{' '}
+                                    comments
                                 </Link>
-                                <Link href={doc.link}>Download document</Link>
+                                <a href={doc.link}>Download document</a>
                             </li>
                         );
                     })}

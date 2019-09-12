@@ -1,52 +1,61 @@
 import React from 'react';
-import { Container, makeStyles } from '@material-ui/core';
-import { Avatar, Typography } from '@material-ui/core';
 import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
+import { Container, makeStyles, Button } from '@material-ui/core';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+
+import CommentList from '../components/CommentList';
+import CommentForm from '../components/CommentForm';
+import { Comment } from '../model/Comment';
+import { storageRef } from '../firebase';
+import { db } from '../firebase';
 
 export default function Comments(props: any) {
     const classes = styles();
     const userString = localStorage.getItem('user');
     const user = JSON.parse(userString ? userString : 'null');
-    const comments = [
-        {
-            userAvatarUrl:
-                'https://lh3.googleusercontent.com/-ZOjm0B0ha5o/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rdAq-aEI-DfH1pSQkBbsfhMnfTNAg/photo.jpg',
-            userName: 'Bruno Silva',
-            content: 'Bom demais esse garoto',
-            createdAt: new Date(),
-        },
-        {
-            userAvatarUrl:
-                'https://lh3.googleusercontent.com/-ZOjm0B0ha5o/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rdAq-aEI-DfH1pSQkBbsfhMnfTNAg/photo.jpg',
-            userName: 'Bruno Silva',
-            content: 'Bom demais esse garoto',
-            createdAt: new Date(),
-        },
-    ];
+
+    const { document } = props.location.state;
+
+    console.log('document: ', document);
+
+    const addComment = (comment: Comment) => {
+        const doc = db.collection('documents').doc(document.id);
+        console.log(doc);
+
+        const newComments = [
+            ...document.comments,
+            {
+                userName: user.displayName,
+                userAvatarUrl: user.photoURL,
+                content: comment,
+                createdAt: new Date(),
+            },
+        ];
+
+        db.collection('documents')
+            .doc(document.id)
+            .update({
+                comments: newComments,
+            })
+            .then(() => (document.comments = newComments));
+    };
 
     return user ? (
         <Container maxWidth="md" className="container">
-            <h1>Uira Veríssimo</h1>
-            <ul>
-                {comments.map((comment: any, index: number) => {
-                    const divisor = index > 0 ? classes.divisor : '';
+            <div className={classes.header}>
+                <Link to="/documents">
+                    <Button className={classes.backButton}>
+                        <KeyboardBackspaceIcon fontSize="large" />
+                    </Button>
+                </Link>
 
-                    return (
-                        <li className={`${classes.item} ${divisor}`}>
-                            <Avatar
-                                src={comment.userAvatarUrl}
-                                className={classes.avatar}
-                            />
-                            <span className={classes.user}>
-                                {comment.userName}
-                            </span>
-                            <span className={classes.comment}>
-                                {comment.content}
-                            </span>
-                        </li>
-                    );
-                })}
-            </ul>
+                <h1>Candidate: {document.name}</h1>
+
+                <span></span>
+            </div>
+            <CommentForm onAddComment={addComment} />
+            <CommentList comments={document.comments} />
         </Container>
     ) : (
         <Redirect to="/" />
@@ -54,27 +63,13 @@ export default function Comments(props: any) {
 }
 
 const styles = makeStyles({
-    avatar: {
-        width: 30,
-        height: 30,
-        marginRight: 5,
-    },
-    item: {
+    header: {
         display: 'flex',
+        justifyContent: 'space-between',
         alignItems: 'center',
-
-        padding: '15px 0',
+        marginBottom: 20,
     },
-    user: {
-        fontWeight: 'bold',
-        marginRight: 10,
-        fontSize: 18,
-    },
-    comment: {
-        fontSize: 16,
-        color: '#555',
-    },
-    divisor: {
-        borderTop: '1px solid #ddd',
+    backButton: {
+        fontSize: 20,
     },
 });

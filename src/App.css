@@ -18,6 +18,10 @@ body {
     font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 }
 
+a {
+    text-decoration: none;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -33,4 +37,10 @@ body {
 .container.center {
     justify-content: center;
     align-items: center;
+}
+
+.add-button {
+    margin-left: 10px !important;
+    background: #2c465f !important;
+    color: #fff;
 }
