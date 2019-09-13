@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Container, makeStyles, Button } from '@material-ui/core';
@@ -7,7 +7,6 @@ import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import CommentList from '../components/CommentList';
 import CommentForm from '../components/CommentForm';
 import { Comment } from '../model/Comment';
-import { storageRef } from '../firebase';
 import { db } from '../firebase';
 
 export default function Comments(props: any) {
@@ -15,14 +14,9 @@ export default function Comments(props: any) {
     const userString = localStorage.getItem('user');
     const user = JSON.parse(userString ? userString : 'null');
 
-    const { document } = props.location.state;
-
-    console.log('document: ', document);
+    const [document, setDocument] = useState(props.location.state.document);
 
     const addComment = (comment: Comment) => {
-        const doc = db.collection('documents').doc(document.id);
-        console.log(doc);
-
         const newComments = [
             ...document.comments,
             {
@@ -38,7 +32,12 @@ export default function Comments(props: any) {
             .update({
                 comments: newComments,
             })
-            .then(() => (document.comments = newComments));
+            .then(() => {
+                setDocument({
+                    ...document,
+                    comments: newComments,
+                });
+            });
     };
 
     return user ? (

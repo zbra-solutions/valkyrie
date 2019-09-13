@@ -21,7 +21,11 @@ export default function DocumentForm() {
     const submit = async () => {
         if (document) {
             const link = await upload();
-            collection.add({ name, link });
+            collection.add({
+                name,
+                link,
+                comments: []
+            });
 
             setName('');
             setDocument(null);

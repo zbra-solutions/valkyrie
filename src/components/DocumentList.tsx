@@ -2,7 +2,6 @@ import React, { ChangeEvent, Component } from 'react';
 import { db } from '../firebase';
 import { collectionData } from 'rxfire/firestore';
 import { startWith } from 'rxjs/operators';
-import Comments from '../pages/Comments';
 import { Link } from 'react-router-dom';
 
 type State = {
@@ -25,7 +24,6 @@ export default class DocumentList2 extends Component<{}, State> {
         collectionData(this.query, 'id')
             .pipe(startWith([]))
             .subscribe((u: any) => {
-                console.log(u);
                 this.setState({
                     documents: u,
                 });
@@ -40,10 +38,6 @@ export default class DocumentList2 extends Component<{}, State> {
             });
         };
     };
-
-    addComment = () => {
-
-    }
 
     render() {
         return (
